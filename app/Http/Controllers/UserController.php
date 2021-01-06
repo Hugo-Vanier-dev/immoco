@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     /**
@@ -15,7 +17,8 @@ class UserController extends Controller
     }
     public function getById($id)
     {
-        return "Première route vers Rome.";
+        $user=User::findOrFail($id);
+        return $user;
     }
     //
 }
