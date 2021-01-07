@@ -18,3 +18,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/users/{id}', 'UserController@getById');
+
+$router->get('/clients/{id}', 'ClientController@getById');
+
+$router->get('/clients', 'ClientController@getAll');
