@@ -18,47 +18,44 @@ class AppointmentController extends Controller
     }
     public function getById($id)
     {
-        $appointment=Appointment::findOrFail($id);
-        return $appointment;
+        $appointment = Appointment::findOrFail($id);
+        return response()->json($appointment);
     }
     //
-    public function getByUser($userId, Request $request)
+    public function getByUser(Request $request)
     {
-        $appointment = Appointment::all()
-        ->where('date', '=', '2021-01-08 10:30:00')
-        //->where('date', '<=', '')
-        ->where('id_users', '=', $userId)
-        ->get('id_clients', 'date');
+        $appointments = Appointment::where('id_users', $request->route('id_users'))
+        ->whereDate('date', '>', date($request->get('dateStart')))
+        ->whereDate('date', '<', date($request->get('dateEnd')))
+        ->get();
+        return response()->json($appointment);
     }
     //
-    public function getByClient($clientId)
+    public function getByClient(Request $request)
     {
-        $limit=$request->input('limit');
-        $appointment=Appointment::findOrFail($request);
-        return $appointment;
+        $appointment = Appointment::where('id_clients', $request->route('id_clients'))
+        ->get();
+        return response()->json($appointment);
     }
     //
-    public function createAppointment(Request $request){
-       
-        $appointment = Appointment::create($request->all());
+    public function createAppointment(Request $request)
+    {
+        $appointment = Appointment::where('id_users',$request->route('id_clients'));
+        $appointment->create();
         return response()->json($appointment);
    
     }
     //
-    public function updateAppointment(Request $request, $id){
-        $appointment  = Appointment::find($id);
-        $appointment->day = $request->input('day');
-        $appointment->month = $request->input('month');
-        $appointment->year = $request->input('year');
-        $appointment->hour = $request->input('hour');
+    public function updateAppointment($id){
+        $appointment = Appointment::find($id);
+        $appointment->date = input('date');
         $appointment->save();
         return response()->json($appointment);
     }  
     //
     public function deleteAppointment($id){
-        $appointment  = Appointment::find($id);
+        $appointment = Appointment::find($id);
         $appointment->delete();
-   
         return response()->json('Rendez-vous supprimé avec succès.');
     }
     //

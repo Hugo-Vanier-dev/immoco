@@ -19,7 +19,7 @@ class Appointment extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $fillable = [
-        'id','date','city','address','description','created_at','updated_at','deleted_at','id_users','id_clients','id_appointments_types'
+        'id','date','city','address','description','id_users','id_clients','id_appointments_types'
     ];
 
     /**

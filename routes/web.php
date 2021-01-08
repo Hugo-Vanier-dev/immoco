@@ -23,5 +23,8 @@ $router->get('/clients/{id}', 'ClientController@getById');
 $router->get('/clients', 'ClientController@getAll');
 
 $router->get('/appointments/{id}', 'AppointmentController@getById');
-$router->get('/appointments/users/{userId}', 'AppointmentController@getByUser');
-$router->get('/appointments/clients/{clientId}', 'AppointmentController@getByClient');
+$router->get('/appointments/users/{id_users}', 'AppointmentController@getByUser');
+$router->get('/appointments/clients/{id_clients}', 'AppointmentController@getByClient');
+$router->post('/appointments', 'AppointmentController@createAppointment');
+$router->put('/appointments/{id}', 'AppointmentController@updateAppointment');
+$router->delete('/appointments/{id}', 'AppointmentController@deleteAppointment');
