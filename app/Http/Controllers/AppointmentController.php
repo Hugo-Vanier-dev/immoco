@@ -51,13 +51,12 @@ class AppointmentController extends Controller
         $appointment->date = input('date');
         $appointment->save();
         return response()->json($appointment);
-    }  
+    }      
     //
     public function deleteAppointment($id){
         $appointment = Appointment::find($id);
         $appointment->delete();
-        return response()->json('Rendez-vous supprimé avec succès.');
+        return response()->json('Rendez-vous archivé correctement.');
     }
-    //
 }
 

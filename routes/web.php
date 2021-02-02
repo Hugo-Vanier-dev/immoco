@@ -28,3 +28,4 @@ $router->get('/appointments/clients/{id_clients}', 'AppointmentController@getByC
 $router->post('/appointments', 'AppointmentController@createAppointment');
 $router->put('/appointments/{id}', 'AppointmentController@updateAppointment');
 $router->delete('/appointments/{id}', 'AppointmentController@deleteAppointment');
+//$router->get('/appointments/{id}', 'AppointmentController@softDeletedAppointment');
