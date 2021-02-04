@@ -18,13 +18,13 @@ class ClientController extends Controller
     }
     public function getById($id)
     {
-        $client=Client::findOrFail($id);
+        $client = Client::findOrFail($id);
         return $client;
     }
     public function getAll(Request $request)
     {
-        $limit=$request->input('limit');
-        $client=Client::findOrFail($request);
+        $limit = $request->input('limit');
+        $client = Client::findOrFail($request);
         return $client;
     }
     public function getByUser(Request $request)
