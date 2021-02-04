@@ -14,6 +14,7 @@ class CreatePropertiesTable extends Migration
     public function up()
     {
         Schema::create('properties', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -45,13 +46,18 @@ class CreatePropertiesTable extends Migration
             $table->boolean('swimmingPool')->default(false);
             $table->boolean('balcony')->default(false);
             $table->boolean('archive')->default(false);
-            $table->integer('client_id')->unsigned();
-            $table->integer('property_type_id');
+            $table->bigInteger('client_id')->unsigned();
+            $table->bigInteger('property_type_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::table('properties', function($table){
+            $table->foreign('client_id')
+            ->references('id')->on('clients')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
             $table->foreign('property_type_id')
             ->references('id')->on('property_types')
             ->onDelete('cascade')

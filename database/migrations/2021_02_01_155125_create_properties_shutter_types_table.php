@@ -14,11 +14,12 @@ class CreatePropertiesShutterTypesTable extends Migration
     public function up()
     {
         Schema::create('properties_shutter_types', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();      
-            $table->integer('property_id')->unsigned();
-            $table->integer('shutter_type_id')->unsigned();
+            $table->bigInteger('property_id')->unsigned();
+            $table->bigInteger('shutter_type_id')->unsigned();
         });
 
         Schema::table('properties_shutter_types', function($table){

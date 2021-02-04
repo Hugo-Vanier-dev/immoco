@@ -56,12 +56,12 @@ class PropertySeeder extends Seeder
 
         DB::table('properties_shutter_types')->insert([
             'property_id' => $id,
-            'shutter_type_id' => 8
+            'shutter_type_id' => 4
         ]);
 
         DB::table('properties_shutter_types')->insert([
             'property_id' => $id,
-            'shutter_type_id' => 9
+            'shutter_type_id' => 1
         ]);
 
     }

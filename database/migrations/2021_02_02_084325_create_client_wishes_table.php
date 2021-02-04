@@ -14,6 +14,7 @@ class CreateClientWishesTable extends Migration
     public function up()
     {
         Schema::create('client_wishes', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -36,7 +37,7 @@ class CreateClientWishesTable extends Migration
             $table->boolean('opticalFiber')->default(false);
             $table->boolean('swimmingPool')->default(false);
             $table->boolean('balcony')->default(false);
-            $table->integer('client_id')->unsigned();
+            $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

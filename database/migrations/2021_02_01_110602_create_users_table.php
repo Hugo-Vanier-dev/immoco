@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -24,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('cellphone', 10)->nullable()->default(null);
             $table->string('phone', 10)->nullable()->default(null);
             $table->char('password', 60);
-            $table->integer('user_type_id')->unsigned();
+            $table->bigInteger('user_type_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

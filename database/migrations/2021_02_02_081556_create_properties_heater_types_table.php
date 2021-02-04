@@ -14,11 +14,12 @@ class CreatePropertiesHeaterTypesTable extends Migration
     public function up()
     {
         Schema::create('properties_heater_types', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();       
-            $table->integer('property_id')->unsigned();
-            $table->integer('heater_type_id')->unsigned();
+            $table->bigInteger('property_id')->unsigned();
+            $table->bigInteger('heater_type_id')->unsigned();
         });
 
         Schema::table('properties_heater_types', function($table){

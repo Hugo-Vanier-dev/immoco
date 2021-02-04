@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
             AppointmentTypeSeeder::class,
             ClientTypeSeeder::class,
             HeaterTypeSeeder::class,
+            ShutterTypeSeeder::class,
             PropertyTypeSeeder::class,
             UserTypeSeeder::class,
             UserSeeder::class,
-            //ClientSeeder::class,
+            ClientSeeder::class,
             AppointmentSeeder::class,
             PropertySeeder::class,
             clientWishSeeder::class

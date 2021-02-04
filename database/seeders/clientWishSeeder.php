@@ -33,12 +33,12 @@ class clientWishSeeder extends Seeder
 
         DB::table('client_wishes_shutter_types')->insert([
             'client_wish_id' => $id,
-            'shutter_type_id' => 8
+            'shutter_type_id' => 1
         ]);
 
         DB::table('client_wishes_shutter_types')->insert([
             'client_wish_id' => $id,
-            'shutter_type_id' => 9
+            'shutter_type_id' => 4
         ]);
     }
 }
