@@ -19,32 +19,29 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('me', 'AuthController@me');
         $router->post('', 'UserController@createUser');
     });
+    $router->group(['prefix' => 'clients'], function() use ($router){
+        $router->get('{id}', 'ClientController@getById');
+        $router->get('', 'ClientController@getAll');
+    });
+    $router->group(['prefix' => 'appointments'], function() use ($router) {
+        $router->get('{id}', 'AppointmentController@getById');
+        $router->get('users/{userId}', 'AppointmentController@getByUser');
+        $router->get('client/{clientId}', 'AppointmentController@getByClient');
+        $router->post('', 'AppointmentController@createAppointment');
+        $router->put('{id}', 'AppointmentController@updateAppointment');
+        $router->delete('{id}', 'AppointmentController@deleteAppointment');
+    });
+    $router->group(['prefix' => 'properties'], function() use ($router){
+        $router->get('{id}', 'PropertyController@getById');
+        $router->get('', 'PropertyController@getAll');
+        $router->get('/clients/{clientId}', 'PropertyController@getByClient');
+        $router->get('/clientWishes/{clientWishId}', 'PropertyController@getByClientWish');
+        $router->post('', 'PropertyController@create');
+        $router->put('{id}', 'PropertyController@update');
+        $router->delete('{id}', 'PropertyController@delete');
+    });
  });
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-
-$router->get('/users/{id}', 'UserController@getById');
-
-$router->get('/clients/{id}', 'ClientController@getById');
-$router->get('/clients', 'ClientController@getAll');
-
-$router->get('/appointments/{id}', 'AppointmentController@getById');
-$router->get('/appointments/users/{id_users}', 'AppointmentController@getByUser');
-$router->get('/appointments/clients/{id_clients}', 'AppointmentController@getByClient');
-$router->post('/appointments', 'AppointmentController@createAppointment');
-$router->put('/appointments/{id}', 'AppointmentController@updateAppointment');
-$router->delete('/appointments/{id}', 'AppointmentController@deleteAppointment');
-
-$router->get('/users/{id}','UserController@getById');
-
-$router->get('/property/{id}','PropertyController@getById');
-
-$router->get('/properties','PropertyController@getAll');
-
-$router->post('/properties','PropertyController@create');
-
-$router->delete('/properties/{id}','PropertyController@delete');
-
-$router->put('/properties/{id}','PropertyController@update');
