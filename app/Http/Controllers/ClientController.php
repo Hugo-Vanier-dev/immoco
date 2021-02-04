@@ -21,14 +21,12 @@ class ClientController extends Controller
         $client=Client::findOrFail($id);
         return $client;
     }
-    //
     public function getAll(Request $request)
     {
         $limit=$request->input('limit');
         $client=Client::findOrFail($request);
         return $client;
     }
-    //
     public function getByUser(Request $request)
     {
         $client = Client::where('id_users', $request->route('id_users'))
@@ -37,20 +35,17 @@ class ClientController extends Controller
         ->get();
         return response()->json($client);
     }
-    //
     public function createClient(Request $request)
     {
         $client = Client::where('id_users',$request->route('id_clients'));
         $client->create();
         return response()->json($client);
     }
-    //
     public function updateClient($id){
         $client = Client::find($id);
         $client->save();
         return response()->json($client);
-    }      
-    //
+    }
     public function deleteClient($id){
         $client = Client::find($id);
         $client->delete();
