@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\ClientController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,14 +16,22 @@
 */
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'users'], function() use ($router){
-        $router->post('login', 'AuthController@login');
+        $router->get('', 'UserController@gets');
+        $router->get('{id}', 'UserController@gets');
         $router->get('logout', 'AuthController@logout');
         $router->get('me', 'AuthController@me');
         $router->post('', 'UserController@createUser');
+        $router->post('login', 'AuthController@login');
+        $router->put('{id}', 'UserController@put');
+        $router->delete('{id}', 'UserController@delete');
     });
     $router->group(['prefix' => 'clients'], function() use ($router){
         $router->get('{id}', 'ClientController@getById');
         $router->get('', 'ClientController@getAll');
+        $router->get('/users/userId', 'ClientController@getByUser');
+        $router->post('', 'ClientController@create');
+        $router->put('{id}', 'ClientController@put');
+        $router->delete('{id}', 'ClientController@delete');
     });
     $router->group(['prefix' => 'appointments'], function() use ($router) {
         $router->get('{id}', 'AppointmentController@getById');
@@ -39,6 +49,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('', 'PropertyController@create');
         $router->put('{id}', 'PropertyController@update');
         $router->delete('{id}', 'PropertyController@delete');
+    });
+    $router->group(['prefix' => 'clientWishes'], function() use ($router){
+        $router->get('{id}', 'ClientWhishController@getById');
+        $router->get('clients/{clientId}', 'ClientWhishController@getByClient');
+        $router->post('', 'ClientWishController@create');
+        $router->put('{id}', 'ClientWishController@put');
+        $router->delete('{id}', 'ClientWishController@delete');
     });
  });
 
