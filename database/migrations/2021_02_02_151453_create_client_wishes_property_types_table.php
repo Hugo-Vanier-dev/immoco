@@ -14,11 +14,12 @@ class CreateClientWishesPropertyTypesTable extends Migration
     public function up()
     {
         Schema::create('client_wishes_property_types', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
-            $table->integer('client_wish_id')->unsigned();
-            $table->integer('property_type_id')->unsigned();
+            $table->bigInteger('client_wish_id')->unsigned();
+            $table->bigInteger('property_type_id')->unsigned();
         });
 
         Schema::table('client_wishes_property_types', function($table){

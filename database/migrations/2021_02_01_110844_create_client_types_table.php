@@ -14,6 +14,7 @@ class CreateClientTypesTable extends Migration
     public function up()
     {
         Schema::create('client_types', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();

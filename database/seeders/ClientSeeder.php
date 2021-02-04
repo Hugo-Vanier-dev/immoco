@@ -18,7 +18,6 @@ class ClientSeeder extends Seeder
             'lastname' => 'Vanier De Saint Aunay',
             'firstname' => 'Hugo',
             'mail' => 'hugovanierdesaintaunay@gmail.com',
-            'username' => 'suzieRo',
             'cellphone' => '0782209987',
             'phone' => '0344390216',
             'client_type_id' => 2,

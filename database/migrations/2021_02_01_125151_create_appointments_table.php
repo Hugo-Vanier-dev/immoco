@@ -14,6 +14,7 @@ class CreateAppointmentsTable extends Migration
     public function up()
     {
         Schema::create('appointments', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -21,9 +22,9 @@ class CreateAppointmentsTable extends Migration
             $table->string('adress', 255);
             $table->text('description')->nullable();
             $table->dateTime('date');
-            $table->integer('appointment_type_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('client_id')->unsigned();
+            $table->bigInteger('appointment_type_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

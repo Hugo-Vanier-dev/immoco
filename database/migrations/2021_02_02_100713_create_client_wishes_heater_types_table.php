@@ -14,11 +14,12 @@ class CreateClientWishesHeaterTypesTable extends Migration
     public function up()
     {
         Schema::create('client_wishes_heater_types', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();    
-            $table->integer('client_wish_id')->unsigned();
-            $table->integer('heater_type_id')->unsigned();
+            $table->bigInteger('client_wish_id')->unsigned();
+            $table->bigInteger('heater_type_id')->unsigned();
         });
 
         Schema::table('client_wishes_heater_types', function($table){

@@ -14,6 +14,7 @@ class CreateClientsTable extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -23,8 +24,8 @@ class CreateClientsTable extends Migration
             $table->string('cellphone', 10)->nullable()->default(null);
             $table->string('phone', 10)->nullable()->default(null);
             $table->boolean('archive')->default(false);
-            $table->integer('client_type_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('client_type_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
