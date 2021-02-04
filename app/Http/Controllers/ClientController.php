@@ -29,4 +29,31 @@ class ClientController extends Controller
         return $client;
     }
     //
+    public function getByUser(Request $request)
+    {
+        $client = Client::where('id_users', $request->route('id_users'))
+        ->whereDate('date', '>', date($request->get('dateStart')))
+        ->whereDate('date', '<', date($request->get('dateEnd')))
+        ->get();
+        return response()->json($client);
+    }
+    //
+    public function createClient(Request $request)
+    {
+        $client = Client::where('id_users',$request->route('id_clients'));
+        $client->create();
+        return response()->json($client);
+    }
+    //
+    public function updateClient($id){
+        $client = Client::find($id);
+        $client->save();
+        return response()->json($client);
+    }      
+    //
+    public function deleteClient($id){
+        $client = Client::find($id);
+        $client->delete();
+        return response()->json('Rendez-vous archivé correctement.');
+    }
 }
