@@ -36,3 +36,15 @@ $router->get('/appointments/clients/{id_clients}', 'AppointmentController@getByC
 $router->post('/appointments', 'AppointmentController@createAppointment');
 $router->put('/appointments/{id}', 'AppointmentController@updateAppointment');
 $router->delete('/appointments/{id}', 'AppointmentController@deleteAppointment');
+
+$router->get('/users/{id}','UserController@getById');
+
+$router->get('/property/{id}','PropertyController@getById');
+
+$router->get('/properties','PropertyController@getAll');
+
+$router->post('/properties','PropertyController@create');
+
+$router->delete('/properties/{id}','PropertyController@delete');
+
+$router->put('/properties/{id}','PropertyController@update');
