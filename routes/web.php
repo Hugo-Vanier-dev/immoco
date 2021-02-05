@@ -19,16 +19,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('', 'UserController@gets');
         $router->get('logout', 'AuthController@logout');
         $router->get('me', 'AuthController@me');
-        $router->get('{id}', 'UserController@gets');
+        $router->get('{id}', 'UserController@get');
         $router->post('', 'UserController@createUser');
         $router->post('login', 'AuthController@login');
         $router->put('{id}', 'UserController@put');
         $router->delete('{id}', 'UserController@delete');
     });
     $router->group(['prefix' => 'clients'], function() use ($router){
-        $router->get('{id}', 'ClientController@getById');
         $router->get('', 'ClientController@getAll');
-        $router->get('/users/userId', 'ClientController@getByUser');
+        $router->get('{id}', 'ClientController@getById');
+        $router->get('users/{userId}', 'ClientController@getByUser');
         $router->post('', 'ClientController@create');
         $router->put('{id}', 'ClientController@put');
         $router->delete('{id}', 'ClientController@delete');
@@ -42,8 +42,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('{id}', 'AppointmentController@deleteAppointment');
     });
     $router->group(['prefix' => 'properties'], function() use ($router){
-        $router->get('{id}', 'PropertyController@getById');
         $router->get('', 'PropertyController@getAll');
+        $router->get('{id}', 'PropertyController@getById');
         $router->get('/clients/{clientId}', 'PropertyController@getByClient');
         $router->get('/clientWishes/{clientWishId}', 'PropertyController@getByClientWish');
         $router->post('', 'PropertyController@create');
