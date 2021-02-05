@@ -33,7 +33,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'lastname', 'firstname', 'mail', 'username', 'cellephone', 'phone', 'id_userTypes'
+        'lastname', 'firstname', 'mail', 'username', 'cellephone', 'phone', 'user_type_id'
     ];
 
     /**
@@ -47,7 +47,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function userType()
     {
-        return $this->belongsTo(UserType::class, 'id_user_types')->withDefault();
+        return $this->belongsTo(UserType::class, 'user_type_id')->withDefault();
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'user_id');
+    }
+
+    public function clients(){
+        return $this->hasMany(Client::class, 'user_id');
     }
         /**
      * Get the identifier that will be stored in the subject claim of the JWT.

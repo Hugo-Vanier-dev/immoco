@@ -17,9 +17,9 @@ use App\Http\Controllers\ClientController;
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'users'], function() use ($router){
         $router->get('', 'UserController@gets');
-        $router->get('{id}', 'UserController@gets');
         $router->get('logout', 'AuthController@logout');
         $router->get('me', 'AuthController@me');
+        $router->get('{id}', 'UserController@gets');
         $router->post('', 'UserController@createUser');
         $router->post('login', 'AuthController@login');
         $router->put('{id}', 'UserController@put');

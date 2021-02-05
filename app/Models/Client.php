@@ -2,25 +2,47 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model implements AuthenticatableContract, AuthorizableContract
+class Client extends Model
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'firstname', 'lastname', 'phone', 'cellphone', 'address', 'email',
+    protected $attributes = [
+        'mail' => null,
+        'cellephone' => null,
+        'phone' => null,
+        'archive' => false
     ];
+
+    protected $fillable = [
+        'firstname', 'lastname', 'phone', 'cellphone', 'archive', 'mail', 'user_id', 'client_type_id'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
+    }
+
+    public function clientType()
+    {
+        return $this->belongsTo(ClientType::class, 'client_type_id')->withDefault();
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'client_id');
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'client_id');
+    }
+
+    public function clientWish(){
+        return $this->hasOne(clientWish::class, 'client_id');
+    }
 
     /**
      * The attributes excluded from the model's JSON form.
