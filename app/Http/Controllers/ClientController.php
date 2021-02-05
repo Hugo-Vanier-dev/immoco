@@ -49,6 +49,6 @@ class ClientController extends Controller
     public function deleteClient($id){
         $client = Client::find($id);
         $client->delete();
-        return response()->json('Rendez-vous archivé correctement.');
+        return response()->json('Client archivé.');
     }
 }
