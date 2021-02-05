@@ -25,29 +25,106 @@ class ClientController extends Controller
     public function getAll(Request $request)
     {
         $limit = $request->input('limit');
-        $client = Client::findOrFail($request);
-        return $client;
+        $clients = Client::findOrFail($request);
+        return $clients;
     }
     public function getByUser($id)
     {
         try{
         $user = User::findOrFail($id);
-        $client = Client::where(['user_id'=>$id])->get();
-        return response()->json($client, 200);
+        $clients = Client::where(['user_id'=>$id])->get();
+        return response()->json($clients, 200);
         }catch(\Exception $e){
             return response()->json('Commercial non trouvé', 404);
         }
     }
     public function createClient(Request $request)
     {
-        $client = Client::where('user_id',$request->route('id'));
-        $client->create();
-        return response()->json($client);
-    }
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|max:50',
+            'lastname' => 'required|max:50',
+            'mail' => 'required|email|unique:clients|max:255',
+            'cellphone' => [
+                'size:10',
+                Rule::requiredIf($request->input('phone') === null)
+            ],
+            'phone' => [
+                'size:10',
+                Rule::requiredIf($request->input('cellphone') === null)
+            ],
+            'user_type_id' => 'required|integer'
+        ],
+        [
+            'required' => 'Veuillez remplir ce champ',
+            'max' => 'Caractères maximum dépassés',
+            'email' => 'Veuillez une adresse mail valide',
+            'mail.unique' => 'Cette adresse mail est déjà utilisée',
+            'cellphone.size' => 'Veuillez entrer un numéro de téléphone valide',
+            'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $client = new Client();
+
+        $client->firstname = $request->firstname;
+        $client->lastname = $request->lastname;
+        $client->mail = $request->mail;
+        $client->cellphone = $request->cellphone;
+        $client->phone = $request->phone;
+        $client->user_type_id = $request->user_type_id;
+
+        $isSaved = $client->save();
+
+        if($isSaved == true){
+            return response()->json(['message' => 'Le client à bien été ajouté.']);
+        }else {
+            return response()->json(['message' => 'Un problème est survenu lors de l\'ajout du client.']);
+        }
+    }  
+    
     public function updateClient($id){
-        $client = Client::find($id);
-        $client->save();
-        return response()->json($client);
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|max:50',
+            'lastname' => 'required|max:50',
+            'mail' => 'required|email|unique:clients|max:255',
+            'cellphone' => [
+                'size:10',
+                Rule::requiredIf($request->input('phone') === null)
+            ],
+            'phone' => [
+                'size:10',
+                Rule::requiredIf($request->input('cellphone') === null)
+            ],
+            'user_type_id' => 'required|integer'
+        ],
+        [
+            'required' => 'Veuillez remplir ce champ',
+            'max' => 'Caractères maximum dépassés',
+            'email' => 'Veuillez une adresse mail valide',
+            'mail.unique' => 'Cette adresse mail est déjà utilisée',
+            'cellphone.size' => 'Veuillez entrer un numéro de téléphone valide',
+            'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $client = new Client();
+
+        $client->firstname = $request->firstname;
+        $client->lastname = $request->lastname;
+        $client->mail = $request->mail;
+        $client->cellphone = $request->cellphone;
+        $client->phone = $request->phone;
+        $client->user_type_id = $request->user_type_id;
+
+        $isSaved = $client->save();
+
+        if($isSaved == true){
+            return response()->json(['message' => 'Le client à bien été mis-à-jour.']);
+        }else {
+            return response()->json(['message' => 'Un problème est survenu lors de la m-à-j du client.']);
+        }
     }
     public function deleteClient($id){
         $client = Client::find($id);
