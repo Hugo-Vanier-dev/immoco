@@ -22,11 +22,10 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
         return $client;
     }
-    public function getAll(Request $request)
+    public function getAll()
     {
-        $limit = $request->input('limit');
-        $clients = Client::findOrFail($request);
-        return $clients;
+        $clients = Client::all();
+        return response()->json($clients) ;
     }
     public function getByUser($id)
     {
