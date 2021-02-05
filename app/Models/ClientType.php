@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class UserType extends Model
+class ClientType extends Model
 {
 
     use SoftDeletes;
@@ -16,8 +15,8 @@ class UserType extends Model
         'value'
     ];
 
-    public function users()
+    public function clients()
     {
-        return $this->hasMany(User::class, 'user_type_id');
+        return $this->hasMany(Client::class, 'client_type_id');
     }
 }
