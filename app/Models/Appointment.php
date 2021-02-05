@@ -19,14 +19,9 @@ class Appointment extends Model implements AuthenticatableContract, Authorizable
      *
      * @var array
      */
-    protected $fillable = ['id','date','city','address','description','id_users','id_clients','id_appointments_types'];
+    protected $fillable = ['id','date','city','address','description','user_id','client_id','appointments_types_id'];
 
-    /**
-     * Get the user associated with this appointment
-     */
-    public function user(){
-        return $this->hasOne(User::class);
-    }
+    
 
     /**
      * The attributes excluded from the model's JSON form.

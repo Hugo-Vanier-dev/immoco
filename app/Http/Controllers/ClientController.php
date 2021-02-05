@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -27,17 +28,19 @@ class ClientController extends Controller
         $client = Client::findOrFail($request);
         return $client;
     }
-    public function getByUser(Request $request)
+    public function getByUser($id)
     {
-        $client = Client::where('id_users', $request->route('id_users'))
-        ->whereDate('date', '>', date($request->get('dateStart')))
-        ->whereDate('date', '<', date($request->get('dateEnd')))
-        ->get();
-        return response()->json($client);
+        try{
+        $user = User::findOrFail($id);
+        $client = Client::where(['user_id'=>$id])->get();
+        return response()->json($client, 200);
+        }catch(\Exception $e){
+            return response()->json('Commercial non trouvé', 404);
+        }
     }
     public function createClient(Request $request)
     {
-        $client = Client::where('id_users',$request->route('id_clients'));
+        $client = Client::where('user_id',$request->route('id'));
         $client->create();
         return response()->json($client);
     }
