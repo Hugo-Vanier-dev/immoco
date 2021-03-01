@@ -57,7 +57,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('{id}', 'ClientWishController@put');
         $router->delete('{id}', 'ClientWishController@delete');
     });
- });
+
+    $router->get('appointmentTypes', 'AppointmentTypeController@gets');
+    $router->get('clientTypes', 'ClientTypeController@gets');
+    $router->get('heaterTypes', 'HeaterTypeController@gets');
+    $router->get('propertyTypes', 'PropertyTypeController@gets');
+    $router->get('shutterTypes', 'ShutterTypeController@gets');
+    $router->get('userTypes', 'UserTypeController@gets');
+});
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
