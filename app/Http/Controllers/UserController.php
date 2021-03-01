@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Exception;
 
 class UserController extends Controller
 {
@@ -130,7 +129,8 @@ class UserController extends Controller
     public function delete($id) {
         try{
             $user = User::findOrFail($id);
-            $isDeleted = $user->delete();
+            $user->delete();
+            return response()->json('Utilisateur supprimer');
         }catch(\Exception $e){
             return response()->json('Utilisateur non trouvé', 404);
         }
