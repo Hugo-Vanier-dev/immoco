@@ -20,6 +20,7 @@ class CreateClientWishesHeaterTypesTable extends Migration
             $table->id();    
             $table->bigInteger('client_wish_id')->unsigned();
             $table->bigInteger('heater_type_id')->unsigned();
+            $table->timestamps();
         });
 
         Schema::table('client_wishes_heater_types', function($table){

@@ -20,6 +20,7 @@ class CreateClientWishesPropertyTypesTable extends Migration
             $table->id();
             $table->bigInteger('client_wish_id')->unsigned();
             $table->bigInteger('property_type_id')->unsigned();
+            $table->timestamps();
         });
 
         Schema::table('client_wishes_property_types', function($table){

@@ -20,6 +20,7 @@ class CreateClientWishesShutterTypesTable extends Migration
             $table->id();
             $table->bigInteger('client_wish_id')->unsigned();
             $table->bigInteger('shutter_type_id')->unsigned();
+            $table->timestamps();
         });
 
         Schema::table('client_wishes_shutter_types', function($table){

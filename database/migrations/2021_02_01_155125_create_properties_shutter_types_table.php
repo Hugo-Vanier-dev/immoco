@@ -20,6 +20,7 @@ class CreatePropertiesShutterTypesTable extends Migration
             $table->id();      
             $table->bigInteger('property_id')->unsigned();
             $table->bigInteger('shutter_type_id')->unsigned();
+            $table->timestamps();
         });
 
         Schema::table('properties_shutter_types', function($table){

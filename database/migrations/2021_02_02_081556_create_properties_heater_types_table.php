@@ -20,6 +20,7 @@ class CreatePropertiesHeaterTypesTable extends Migration
             $table->id();       
             $table->bigInteger('property_id')->unsigned();
             $table->bigInteger('heater_type_id')->unsigned();
+            $table->timestamps();
         });
 
         Schema::table('properties_heater_types', function($table){
