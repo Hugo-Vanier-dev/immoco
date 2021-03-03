@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ClientWishPropertyType extends Model
 {
 
-    use SoftDeletes;
-
     protected $table = 'client_wishes_property_types';
     /**
      * The attributes that are mass assignable.

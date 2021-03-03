@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PropertyHeaterType extends Model
 {
 
-    use SoftDeletes;
-
     protected $table = 'properties_heater_types';
     /**
      * The attributes that are mass assignable.

@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ClientWishHeaterType extends Model
 {
 
-    use SoftDeletes;
-
     protected $table = 'client_wishes_heater_types';
     /**
      * The attributes that are mass assignable.

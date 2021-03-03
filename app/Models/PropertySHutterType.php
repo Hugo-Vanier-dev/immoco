@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PropertyShutterType extends Model
 {
 
-    use SoftDeletes;
-
     protected $table = 'properties_shutter_types';
     /**
      * The attributes that are mass assignable.
