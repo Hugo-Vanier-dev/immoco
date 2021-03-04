@@ -43,7 +43,7 @@ class AppointmentController extends Controller
         }
     }
     //
-    public function getByClient($clientId, Request $request)
+    public function getByClient($clientId)
     {
         try {
             $client = Client::findOrFail($clientId);
