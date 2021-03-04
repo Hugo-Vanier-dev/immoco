@@ -18,7 +18,7 @@ class HeaterTypeController extends Controller
 
     public function gets(){
         $heaterType = HeaterType::all();
-        return response()->json($heaterType);
+        return response()->json($heaterType, 200);
     }
 
 }

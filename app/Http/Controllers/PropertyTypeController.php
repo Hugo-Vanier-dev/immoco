@@ -18,7 +18,7 @@ class PropertyTypeController extends Controller
 
     public function gets(){
         $propertyType = PropertyType::all();
-        return response()->json($propertyType);
+        return response()->json($propertyType, 200);
     }
 
 }

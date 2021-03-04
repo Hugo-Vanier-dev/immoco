@@ -32,12 +32,12 @@ class ClientWishController extends Controller
         }
     }
     //
-    public function getByClient($clientId, Request $request)
+    public function getByClient($clientId)
     {
         try {
             $client = Client::findOrFail($clientId);
             $clientWish = ClientWish::where('id_clients', $client->id)->get();
-            return response()->json($clientWish);
+            return response()->json($clientWish, 200);
         } catch (\Exception $e) {
             return response()->json('Client non trouvé', 404);
         }
@@ -80,7 +80,7 @@ class ClientWishController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
 
             DB::beginTransaction();
@@ -150,9 +150,9 @@ class ClientWishController extends Controller
             }
             DB::commit();
 
-            return response()->json(['message' => 'Le souhait client à bien été ajouté.']);
+            return response()->json(['message' => 'Le souhait client à bien été ajouté.'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 
@@ -194,7 +194,7 @@ class ClientWishController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
 
             DB::beginTransaction();
@@ -346,9 +346,9 @@ class ClientWishController extends Controller
             }
             DB::commit();
 
-            return response()->json(['message' => 'Le souhait client à bien été modifié.']);
+            return response()->json(['message' => 'Le souhait client à bien été modifié.'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
     //
@@ -357,7 +357,7 @@ class ClientWishController extends Controller
         try {
             $clientWish = ClientWish::findOrFail($id);
             $clientWish->delete();
-            return response()->json('Souhait client supprimer');
+            return response()->json('Souhait client supprimer', 200);
         } catch (\Exception $e) {
             return response()->json('Souhait client non trouvé', 404);
         }

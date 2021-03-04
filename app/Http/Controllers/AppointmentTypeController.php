@@ -18,7 +18,7 @@ class AppointmentTypeController extends Controller
 
     public function gets(){
         $appointmentType = AppointmentType::all();
-        return response()->json($appointmentType);
+        return response()->json($appointmentType, 200);
     }
 
 }

@@ -18,7 +18,7 @@ class UserTypeController extends Controller
 
     public function gets(){
         $userType = UserType::all();
-        return response()->json($userType);
+        return response()->json($userType, 200);
     }
 
 }

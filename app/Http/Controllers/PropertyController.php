@@ -210,10 +210,10 @@ class PropertyController extends BaseController
 
             $properties = Property::where($whereArray)->get();
 
-            return response()->json($properties);
+            return response()->json($properties, 200);
 
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 
@@ -264,7 +264,7 @@ class PropertyController extends BaseController
                 ]
             );
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
     
             DB::beginTransaction();
@@ -333,9 +333,9 @@ class PropertyController extends BaseController
             }
             DB::commit();
 
-            return response()->json(['message' => 'La propriété à bien été ajouté.']);
+            return response()->json(['message' => 'La propriété à bien été ajouté.'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
         
     }
@@ -388,7 +388,7 @@ class PropertyController extends BaseController
                 ]
             );
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
     
             DB::beginTransaction();
@@ -510,9 +510,9 @@ class PropertyController extends BaseController
             }
             DB::commit();
 
-            return response()->json(['message' => 'La propriété à bien été ajouté.']);
+            return response()->json(['message' => 'La propriété à bien été ajouté.'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 
@@ -524,7 +524,7 @@ class PropertyController extends BaseController
             if (!$isDeleted) {
                 return response()->json('Il y a eu un problème lors de la suppression', 500);
             } else {
-                return response()->json('Propriété supprimer');
+                return response()->json('Propriété supprimer', 200);
             }
         } catch (\Exception $e) {
             return response()->json('Property non trouvé', 404);

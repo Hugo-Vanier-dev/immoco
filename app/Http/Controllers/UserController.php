@@ -38,7 +38,7 @@ class UserController extends Controller
             'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 400);
         }
         $user = new User();
 
@@ -54,9 +54,9 @@ class UserController extends Controller
         $isSaved = $user->save();
 
         if($isSaved == true){
-            return response()->json(['message' => 'L\'utilisateur à bien été ajouté.']);
+            return response()->json(['message' => 'L\'utilisateur à bien été ajouté.'], 200);
         }else {
-            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout de l\'utilisateur.']);
+            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout de l\'utilisateur.'], 500);
         }
     }
 
@@ -103,7 +103,7 @@ class UserController extends Controller
                 'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
             ]);
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
             $user->firstname = $request->firstname;
             $user->lastname = $request->lastname;
@@ -117,9 +117,9 @@ class UserController extends Controller
             $isSaved = $user->save();
 
             if($isSaved == true){
-                return response()->json(['message' => 'L\'utilisateur à bien été modifié.']);
+                return response()->json(['message' => 'L\'utilisateur à bien été modifié.'], 200);
             }else {
-                return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout de l\'utilisateur.']);
+                return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout de l\'utilisateur.'], 500);
             }
         }catch(\Exception $e){
             return response()->json('Utilisateur non trouvé', 404);
@@ -130,7 +130,7 @@ class UserController extends Controller
         try{
             $user = User::findOrFail($id);
             $user->delete();
-            return response()->json('Utilisateur supprimer');
+            return response()->json('Utilisateur supprimer', 200);
         }catch(\Exception $e){
             return response()->json('Utilisateur non trouvé', 404);
         }

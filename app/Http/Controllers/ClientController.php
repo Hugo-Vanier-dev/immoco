@@ -54,7 +54,7 @@ class ClientController extends Controller
                                 ->get();
         }
 
-        return response()->json($clients);
+        return response()->json($clients, 200);
     }
 
     public function getByUser($userId, Request $request){
@@ -84,7 +84,7 @@ class ClientController extends Controller
                                     ->orderBy($sort, $sortOrder)
                                     ->get();
             }
-            return response()->json($clients);
+            return response()->json($clients, 200);
         } catch (\Exception $e) {
             return response()->json('Utilisateur non trouvé', 404);
         }
@@ -116,7 +116,7 @@ class ClientController extends Controller
             'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 400);
         }
         $client = new Client();
 
@@ -133,9 +133,9 @@ class ClientController extends Controller
         $isSaved = $client->save();
 
         if($isSaved == true){
-            return response()->json(['message' => 'Le client à bien été ajouté.']);
+            return response()->json(['message' => 'Le client à bien été ajouté.'], 200);
         }else {
-            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout du client.']);
+            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout du client.'], 500);
         }
     }
 
@@ -166,7 +166,7 @@ class ClientController extends Controller
                 'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
             ]);
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
     
             $client->firstname = $request->firstname;
@@ -182,9 +182,9 @@ class ClientController extends Controller
             $isSaved = $client->save();
     
             if($isSaved == true){
-                return response()->json(['message' => 'Le client à bien été modifié.']);
+                return response()->json(['message' => 'Le client à bien été modifié.'], 200);
             }else {
-                return response()->json(['message' => 'Il y a eu un problème lors de la modification du client.']);
+                return response()->json(['message' => 'Il y a eu un problème lors de la modification du client.'], 500);
             }
         } catch (\Exception $e) {
             return response()->json('Client non trouvé', 404);
@@ -195,7 +195,7 @@ class ClientController extends Controller
         try{
             $client = Client::findOrFail($id);
             $client->delete();
-            return response()->json('Client supprimer');
+            return response()->json('Client supprimer', 200);
         }catch(\Exception $e){
             return response()->json('Client non trouvé', 404);
         }

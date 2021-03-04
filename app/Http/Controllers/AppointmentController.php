@@ -70,7 +70,7 @@ class AppointmentController extends Controller
             'date' => 'A tester, sert à vérifier que c\'est une date'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 400);
         }
         $appointment = new Appointment();
 
@@ -85,9 +85,9 @@ class AppointmentController extends Controller
         $isSaved = $appointment->save();
 
         if($isSaved == true){
-            return response()->json(['message' => 'Le rendez-vous à bien été ajouté.']);
+            return response()->json(['message' => 'Le rendez-vous à bien été ajouté.'], 200);
         }else {
-            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout du rendez-vous.']);
+            return response()->json(['message' => 'Il y a eu un problème lors de l\'ajout du rendez-vous.'], 500);
         }
     }
     //
@@ -108,7 +108,7 @@ class AppointmentController extends Controller
                 'date' => 'A tester, sert à vérifier que c\'est une date'
             ]);
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json($validator->errors(), 400);
             }
 
             $appointment->city = $request->city;
@@ -122,9 +122,9 @@ class AppointmentController extends Controller
             $isSaved = $appointment->save();
     
             if($isSaved == true){
-                return response()->json(['message' => 'Le rendez-vous à bien été modifié.']);
+                return response()->json(['message' => 'Le rendez-vous à bien été modifié.'], 200);
             }else {
-                return response()->json(['message' => 'Il y a eu un problème lors de la modification du rendez-vous.']);
+                return response()->json(['message' => 'Il y a eu un problème lors de la modification du rendez-vous.'], 500);
             }
         } catch (\Exception $e) {
             return response()->json('Rendez-vous non trouvé', 404);
@@ -135,7 +135,7 @@ class AppointmentController extends Controller
         try {
             $appointment = Appointment::findOrFail($id);
             $appointment->delete();
-            return response()->json('Rendez-vous supprimer');
+            return response()->json('Rendez-vous supprimer', 200);
         } catch (\Exception $e) {
             return response()->json('Rendez-vous non trouvé', 404);
         }

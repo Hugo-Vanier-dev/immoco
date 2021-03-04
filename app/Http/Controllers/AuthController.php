@@ -27,7 +27,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return $this->respondWithToken($token, 200);
     }
 
         /**
@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function me()
     {   
         auth()->user()->userType;
-        return response()->json(auth()->user());
+        return response()->json(auth()->user(), 200);
     }
 
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
         /**

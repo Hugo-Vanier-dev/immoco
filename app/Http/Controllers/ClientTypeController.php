@@ -18,7 +18,7 @@ class ClientTypeController extends Controller
 
     public function gets(){
         $clientType = ClientType::all();
-        return response()->json($clientType);
+        return response()->json($clientType, 200);
     }
 
 }

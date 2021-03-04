@@ -18,7 +18,7 @@ class ShutterTypeController extends Controller
 
     public function gets(){
         $shutterType = ShutterType::all();
-        return response()->json($shutterType);
+        return response()->json($shutterType, 200);
     }
 
 }
