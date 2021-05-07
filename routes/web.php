@@ -27,10 +27,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
     $router->group(['prefix' => 'clients'], function() use ($router){
         $router->get('', 'ClientController@getAll');
-        $router->get('{id}', 'ClientController@getById');
         $router->get('users/{userId}', 'ClientController@getByUser');
         $router->get('count', 'ClientController@countAllClient');
-        $router->get('count/{userId}', 'ClientController@countAllClientByUser');
+        $router->get('{id}', 'ClientController@getById');
         $router->post('', 'ClientController@create');
         $router->put('{id}', 'ClientController@put');
         $router->delete('{id}', 'ClientController@delete');

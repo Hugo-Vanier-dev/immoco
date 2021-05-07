@@ -101,17 +101,15 @@ class ClientController extends Controller
         
     }
     
-    public function post(Request $request){
+    public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'firstname' => 'required|max:50',
             'lastname' => 'required|max:50',
             'mail' => 'required|email|unique:users|max:255',
             'cellphone' => [
-                'size:10',
                 Rule::requiredIf($request->input('phone') === null)
             ],
             'phone' => [
-                'size:10',
                 Rule::requiredIf($request->input('cellphone') === null)
             ],
             'client_type_id' => 'required|integer',
@@ -163,11 +161,9 @@ class ClientController extends Controller
                 'lastname' => 'required|max:50',
                 'mail' => 'required|email|unique:users|max:255',
                 'cellphone' => [
-                    'size:10',
                     Rule::requiredIf($request->input('phone') === null)
                 ],
                 'phone' => [
-                    'size:10',
                     Rule::requiredIf($request->input('cellphone') === null)
                 ],
                 'client_type_id' => 'required|integer',
