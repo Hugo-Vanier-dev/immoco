@@ -23,6 +23,12 @@ class CreateClientsTable extends Migration
             $table->string('mail')->unique()->nullable()->default(null);
             $table->string('cellphone', 10)->nullable()->default(null);
             $table->string('phone', 10)->nullable()->default(null);
+            $table->string('streetNumber')->nullable()->default(null);
+            $table->string('zipCode')->nullable()->default(null);
+            $table->string('city')->nullable()->default(null);
+            $table->string('streetName')->nullable()->default(null);
+            $table->date('birthdate')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
             $table->boolean('archive')->default(false);
             $table->bigInteger('client_type_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();

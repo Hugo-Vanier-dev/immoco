@@ -13,11 +13,17 @@ class Client extends Model
         'mail' => null,
         'cellephone' => null,
         'phone' => null,
-        'archive' => false
+        'archive' => false,
+        'streetNumber' => null,
+        'birthdate' => null,
+        'zipCode' => null,
+        'city' => null,
+        'streetName' => null,
+        'description' => null
     ];
 
     protected $fillable = [
-        'firstname', 'lastname', 'phone', 'cellphone', 'archive', 'mail', 'user_id', 'client_type_id'
+        'firstname', 'lastname', 'phone', 'cellphone', 'archive', 'mail', 'streetNumber', 'birthdate', 'zipCode', 'city', 'streetName', 'description', 'user_id', 'client_type_id'
     ];
 
     public function user()
@@ -44,12 +50,4 @@ class Client extends Model
         return $this->hasOne(clientWish::class, 'client_id');
     }
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    //protected $hidden = [
-    //    'password',
-    //];
 }

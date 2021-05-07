@@ -57,6 +57,16 @@ class ClientController extends Controller
         return response()->json($clients, 200);
     }
 
+    public function countAllClient(){
+        $clientCount = Client::where('archive', 0)->count();
+        return response()->json($clientCount, 200);
+    }
+    
+    public function countAllClientByUser($userId) {
+        $clientCount = Client::where('archive', 0)->where('user_id', $userId)->count();
+        return response()->json($clientCount, 200);
+    }
+
     public function getByUser($userId, Request $request){
         try {
             $user = User::findOrFail($userId);
@@ -126,6 +136,12 @@ class ClientController extends Controller
         $client->username = $request->username;
         $client->cellphone = $request->cellphone;
         $client->phone = $request->phone;
+        $client->streetNumber = $request->streetNumber;
+        $client->streetName = $request->streetName;
+        $client->birthdate = $request->birthdate;
+        $client->zipCode = $request->zipCode;
+        $client->city = $client->city;
+        $client->description = $client->description;
         $client->client_type_id = $request->client_type_id;
         $client->user_id = $request->user_id;
 
@@ -175,6 +191,12 @@ class ClientController extends Controller
             $client->username = $request->username;
             $client->cellphone = $request->cellphone;
             $client->phone = $request->phone;
+            $client->streetNumber = $request->streetNumber;
+            $client->birthdate = $request->birthdate;
+            $client->streetName = $request->streetName;
+            $client->zipCode = $request->zipCode;
+            $client->city = $client->city;
+            $client->description = $client->description;
             $client->client_type_id = $request->client_type_id;
             $client->user_id = $request->user_id;
     
