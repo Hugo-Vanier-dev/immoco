@@ -22,7 +22,7 @@ class AppointmentController extends Controller
     public function getById($id)
     {   
         try {
-            $appointment = Appointment::findOrFail($id);
+            $appointment = Appointment::with('user')->with('client')->with('appointmentType')->findOrFail($id);
             return response()->json($appointment);
         } catch (\Exception $e) {
             return response()->json('Rendez-vous non trouvé', 404);
@@ -33,13 +33,30 @@ class AppointmentController extends Controller
     {
         try {
             $user = User::findOrFail($userId);
-            $appointments = Appointment::where('id_users', $user->id)
+            $appointments = Appointment::where('user_id', $user->id)
                                             ->whereDate('date', '>', date($request->get('dateStart')))
                                             ->whereDate('date', '<', date($request->get('dateEnd')))
+                                            ->with('user')
+                                            ->with('client')
+                                            ->with('appointmentType')
                                             ->get();
             return response()->json($appointments);
         } catch (\Exception $e) {
-            return response()->json('Utilisateur non trouvé', 404);
+            return response()->json($e->getMessage(), 404);
+        }
+    }
+    public function getByUserAndDate($userId, Request $request){
+        try {
+            $user = User::findOrFail($userId);
+            $appointments = Appointment::where('user_id', $user->id)
+                                            ->whereDate('date', '=', date($request->get('date')))
+                                            ->with('user')
+                                            ->with('client')
+                                            ->with('appointmentType')
+                                            ->get();
+            return response()->json($appointments);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 404);
         }
     }
     //
@@ -47,7 +64,11 @@ class AppointmentController extends Controller
     {
         try {
             $client = Client::findOrFail($clientId);
-            $appointments = Appointment::where('id_clients', $client->id)->get();
+            $appointments = Appointment::where('id_clients', $client->id)
+                                            ->with('user')
+                                            ->with('client')
+                                            ->with('appointmentType')
+                                            ->get();
             return response()->json($appointments);
         } catch (\Exception $e) {
             return response()->json('Client non trouvé', 404);

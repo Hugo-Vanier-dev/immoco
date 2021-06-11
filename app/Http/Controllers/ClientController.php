@@ -22,7 +22,12 @@ class ClientController extends Controller
     public function getById($id)
     {
         try {
-            $client = Client::findOrFail($id);
+            $client = Client::with('user')
+                                    ->with('clientType')
+                                    ->with('appointments')
+                                    ->with('properties')
+                                    ->with('clientWish')
+                                    ->findOrFail($id);
             return response()->json($client); 
         } catch (\Exception $e) {
             return response()->json('Client non trouvé', 404);
@@ -38,7 +43,12 @@ class ClientController extends Controller
         $offset = $limit * $nbPage;
         $filter = $request->has('filter') ? $request->get('filter') : null;
         if($filter != null){
-            $clients = Client::where('firstname', 'like', '%' . $filter . '%')
+            $clients = Client::with('user')
+                                ->with('clientType')
+                                ->with('appointments')
+                                ->with('properties')
+                                ->with('clientWish')
+                                ->where('firstname', 'like', '%' . $filter . '%')
                                 ->orWhere('lastname', 'like', '%' . $filter . '%')
                                 ->orWhere('mail', 'like', '%' . $filter . '%')
                                 ->orWhere('cellphone', 'like', '%' . $filter . '%')
@@ -46,9 +56,15 @@ class ClientController extends Controller
                                 ->skip($offset)
                                 ->limit($limit)
                                 ->orderBy($sort, $sortOrder)
+                                
                                 ->get();
         }else{
-            $clients = Client::skip($offset)
+            $clients = Client::with('user')
+                                ->with('clientType')
+                                ->with('appointments')
+                                ->with('properties')
+                                ->with('clientWish')
+                                ->skip($offset)
                                 ->limit($limit)
                                 ->orderBy($sort, $sortOrder)
                                 ->get();
@@ -77,7 +93,12 @@ class ClientController extends Controller
             $offset = $limit * $nbPage;
             $filter = $request->has('filter') ? $request->get('filter') : null;
             if($filter != null){
-                $clients = Client::where('user_id', $user->id)
+                $clients = Client::with('user')
+                                    ->with('clientType')
+                                    ->with('appointments')
+                                    ->with('properties')
+                                    ->with('clientWish')
+                                    ->where('user_id', $user->id)
                                     ->where('firstname', 'like', '%' . $filter . '%')
                                     ->orWhere('lastname', 'like', '%' . $filter . '%')
                                     ->orWhere('mail', 'like', '%' . $filter . '%')
@@ -88,7 +109,12 @@ class ClientController extends Controller
                                     ->orderBy($sort, $sortOrder)
                                     ->get();
             }else{
-                $clients = Client::where('user_id', $user->id)
+                $clients = Client::with('user')
+                                    ->with('clientType')
+                                    ->with('appointments')
+                                    ->with('properties')
+                                    ->with('clientWish')
+                                    ->where('user_id', $user->id)
                                     ->skip($offset)
                                     ->limit($limit)
                                     ->orderBy($sort, $sortOrder)

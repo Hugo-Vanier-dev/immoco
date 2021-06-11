@@ -62,15 +62,18 @@ class UserController extends Controller
 
     public function get($id){
         try{
-            $user = User::findOrFail($id);
+            $user = User::with('userType')
+                ->with('appointments')
+                ->with('clients')
+                ->findOrFail($id);
             return response()->json($user);
         }catch(\Exception $e){
-            return response()->json('Utilisateur non trouvé', 404);
+            return response()->json($e->getMessage(), 404);
         }
     }
 
     public function gets(){
-        $users = User::all();
+        $users = User::with('userType')->get();
         return response()->json($users);
     }
 

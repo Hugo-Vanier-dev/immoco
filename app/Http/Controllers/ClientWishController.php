@@ -25,7 +25,11 @@ class ClientWishController extends Controller
     public function getById($id)
     {
         try {
-            $clientWish = ClientWish::findOrFail($id);
+            $clientWish = ClientWish::with('client')
+                                        ->with('clientWishesHeaterTypes')
+                                        ->with('clientWishesPropertyTypes')
+                                        ->with('clientWishesShutterTypes')
+                                        ->findOrFail($id);
             return response()->json($clientWish);
         } catch (\Exception $e) {
             return response()->json('Souhait client non trouvé', 404);
@@ -35,7 +39,11 @@ class ClientWishController extends Controller
     public function getByClient($clientId)
     {
         try {
-            $client = Client::findOrFail($clientId);
+            $client = Client::with('client')
+                                ->with('clientWishesHeaterTypes')
+                                ->with('clientWishesPropertyTypes')
+                                ->with('clientWishesShutterTypes')
+                                ->findOrFail($clientId);
             $clientWish = ClientWish::where('id_clients', $client->id)->get();
             return response()->json($clientWish, 200);
         } catch (\Exception $e) {

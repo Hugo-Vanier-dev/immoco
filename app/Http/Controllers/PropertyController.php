@@ -20,7 +20,11 @@ class PropertyController extends BaseController
     public function getById($id)
     {
         try {
-            $property = Property::findOrFail($id);
+            $property = Property::with('client')
+                                    ->with('propertyType')
+                                    ->with('propertiesHeaterTypes')
+                                    ->with('propertiesShutterTypes')
+                                    ->findOrFail($id);
             return response()->json($property);
         } catch (\Exception $e) {
             return response()->json('Propriété non trouvé', 404);
@@ -30,7 +34,11 @@ class PropertyController extends BaseController
     public function getByClient($clientId)
     {
         try {
-            $client = Client::findOrFail($clientId);
+            $client = Client::with('client')
+                                ->with('propertyType')
+                                ->with('propertiesHeaterTypes')
+                                ->with('propertiesShutterTypes')
+                                ->findOrFail($clientId);
             $properties = Property::where('id_clients', $client->id)->get();
             return response()->json($properties);
         } catch (\Exception $e) {
@@ -47,7 +55,11 @@ class PropertyController extends BaseController
         $offset = $limit * $nbPage;
         $filter = $request->has('filter') ? $request->get('filter') : null;
         if ($filter != null) {
-            $properties = Property::where('firstname', 'like', '%' . $filter . '%')
+            $properties = Property::with('client')
+                ->with('propertyType')
+                ->with('propertiesHeaterTypes')
+                ->with('propertiesShutterTypes')
+                ->where('firstname', 'like', '%' . $filter . '%')
                 ->orWhere('lastname', 'like', '%' . $filter . '%')
                 ->orWhere('mail', 'like', '%' . $filter . '%')
                 ->orWhere('cellphone', 'like', '%' . $filter . '%')
@@ -57,7 +69,11 @@ class PropertyController extends BaseController
                 ->orderBy($sort, $sortOrder)
                 ->get();
         } else {
-            $properties = Property::skip($offset)
+            $properties = Property::with('client')
+                ->with('propertyType')
+                ->with('propertiesHeaterTypes')
+                ->with('propertiesShutterTypes')
+                ->skip($offset)
                 ->limit($limit)
                 ->orderBy($sort, $sortOrder)
                 ->get();

@@ -19,7 +19,7 @@ class Appointment extends Model
         return $this->belongsTo(Client::class, 'client_id')->withDefault();
     }
 
-    public function appoitmentType(){
+    public function appointmentType(){
         return $this->belongsTo(AppointmentType::class, 'appointment_type_id')->withDefault();
     }
     
