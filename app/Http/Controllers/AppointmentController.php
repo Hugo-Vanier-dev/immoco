@@ -28,6 +28,27 @@ class AppointmentController extends Controller
             return response()->json('Rendez-vous non trouvé', 404);
         }
     }
+
+    public function getNextAppointmentByUser($userId){
+        try {
+            $user = User::findOrFail($userId);
+            $appointment = Appointment::with('user')
+                                        ->with('client')
+                                        ->with('appointmentType')
+                                        ->where('user_id', $user->id)
+                                        ->whereDate('date', '>', date('Y-m-d'))
+                                        ->orWhere(function($query) {
+                                            $query->whereDate('date', '=', date('Y-m-d'))
+                                            ->whereTime('date', '>', date('h:m:s'));
+                                        })
+                                        ->orderBy('date', 'asc')
+                                        ->take(1)
+                                        ->get()[0];
+            return response()->json($appointment);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 404);
+        }
+    }
     //
     public function getByUser($userId, Request $request)
     {

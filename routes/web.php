@@ -37,6 +37,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'appointments'], function() use ($router) {
         $router->get('{id}', 'AppointmentController@getById');
         $router->get('users/{userId}/date', 'AppointmentController@getByUserAndDate');
+        $router->get('users/{userId}/next', 'AppointmentController@getNextAppointmentByUser');
         $router->get('users/{userId}', 'AppointmentController@getByUser');
         $router->get('client/{clientId}', 'AppointmentController@getByClient');
         $router->post('', 'AppointmentController@createAppointment');
