@@ -31,7 +31,7 @@ class PropertySeeder extends Seeder
             'bathRoomNumber' => 1,
             'wcNumber' => 1,
             'buildingNumber' => '44',
-            'bearing' => 3,
+            'level' => 3,
             'garden' => false,
             'garage' => false,
             'cellar' => false,
