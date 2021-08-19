@@ -35,7 +35,7 @@ class PropertySeeder extends Seeder
             'garden' => false,
             'garage' => false,
             'cellar' => false,
-            'atic' => false,
+            'attic' => false,
             'parking' => false,
             'opticalFiber' => true,
             'swimmingPool' => false,
