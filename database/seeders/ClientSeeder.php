@@ -28,7 +28,8 @@ class ClientSeeder extends Seeder
             'cellphone' => '0782209987',
             'phone' => '0344390216',
             'client_type_id' => 2,
-            'user_id' => 1
+            'user_id' => 1,
+            'sexe' => 1
         ]);
     }
 }
