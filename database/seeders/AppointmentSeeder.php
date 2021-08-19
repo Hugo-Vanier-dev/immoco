@@ -15,6 +15,7 @@ class AppointmentSeeder extends Seeder
     public function run()
     {
         DB::table('appointments')->insert([
+            'id' => 1,
             'city' => 'Amiens',
             'address' => '44 boulevard des Fédérés',
             'description' => 'Visite pour un achat',

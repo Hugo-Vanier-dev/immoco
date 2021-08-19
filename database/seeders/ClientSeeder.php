@@ -15,6 +15,7 @@ class ClientSeeder extends Seeder
     public function run()
     {
         DB::table('clients')->insert([
+            'id' => 1,
             'lastname' => 'Vanier De Saint Aunay',
             'firstname' => 'Hugo',
             'mail' => 'hugovanierdesaintaunay@gmail.com',

@@ -15,6 +15,7 @@ class PropertySeeder extends Seeder
     public function run()
     {
         DB::table('properties')->insert([
+            'id' => 1,
             'price' => 98500,
             'label' => 'Magnifique 35m² à Saint-Roch',
             'description' => 'Appartement équipé de 35m² à seulement 5min de la gare Saint Roch à pied',

@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'id' => 1,
             'lastname' => 'Romanov',
             'firstname' => 'Suzie',
             'mail' => 'suzie.romanov@immoco.fr',
