@@ -347,7 +347,7 @@ class PropertyController extends BaseController
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'price' => 'required|integer|min:4|max:10',
+                    'price' => 'required|integer',
                     'label' => 'required',
                     'longitude' => 'required|numeric',
                     'latitude' => 'required|numeric',
@@ -400,7 +400,7 @@ class PropertyController extends BaseController
             $property->latitude = $request->latitude;
             $property->city = $request->city;
             $property->adress = $request->adress;
-            $property->zipCode = $request->cipCode;
+            $property->zipCode = $request->zipcode;
             $property->livingArea = $request->livingArea;
             $property->area = $request->area;
             $property->gardenArea = $request->gardenArea;
