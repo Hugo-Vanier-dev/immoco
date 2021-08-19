@@ -85,7 +85,7 @@ class ClientController extends Controller
         return response()->json($clientCount, 200);
     }
 
-    public function getByUser($userId, Request $request)
+    public function getByUser($userId)
     {
         try {
             $user = User::findOrFail($userId);

@@ -47,7 +47,7 @@ class Client extends Model
     }
 
     public function clientWish(){
-        return $this->hasOne(clientWish::class, 'client_id');
+        return $this->hasOne(ClientWish::class, 'client_id');
     }
 
 }
