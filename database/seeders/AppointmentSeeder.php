@@ -16,7 +16,7 @@ class AppointmentSeeder extends Seeder
     {
         DB::table('appointments')->insert([
             'city' => 'Amiens',
-            'adress' => '44 boulevard des Fédérés',
+            'address' => '44 boulevard des Fédérés',
             'description' => 'Visite pour un achat',
             'date' => '2021-02-17T09:00:00',
             'appointment_type_id' => 1,
