@@ -98,7 +98,7 @@ class ClientController extends Controller
                 ->get();
             return response()->json($clients, 200);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), $e->getCode());
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 
