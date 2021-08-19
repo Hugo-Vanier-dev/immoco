@@ -22,7 +22,7 @@ class PropertySeeder extends Seeder
             'longitude' => 49.895693,
             'latitude' => 2.283586,
             'city' => 'Amiens',
-            'adress' => '44 boulevard des Fédérés',
+            'address' => '44 boulevard des Fédérés',
             'zipcode' => '80000',
             'livingArea' => 35,
             'area' => 35,
