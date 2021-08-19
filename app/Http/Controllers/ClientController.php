@@ -93,6 +93,7 @@ class ClientController extends Controller
                 ->with('clientType')
                 ->with('appointments')
                 ->with('properties')
+                ->with('clientWish')
                 ->where('user_id', $user->id)
                 ->get();
             return response()->json($clients, 200);
