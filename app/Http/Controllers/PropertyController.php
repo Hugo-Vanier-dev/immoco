@@ -12,6 +12,7 @@ use App\Models\ClientWishShutterType;
 use App\Models\PropertyHeaterType;
 use App\Models\PropertyShutterType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -21,10 +22,10 @@ class PropertyController extends BaseController
     {
         try {
             $property = Property::with('client')
-                                    ->with('propertyType')
-                                    ->with('propertiesHeaterTypes')
-                                    ->with('propertiesShutterTypes')
-                                    ->findOrFail($id);
+                ->with('propertyType')
+                ->with('propertiesHeaterTypes')
+                ->with('propertiesShutterTypes')
+                ->findOrFail($id);
             return response()->json($property);
         } catch (\Exception $e) {
             return response()->json('Propriété non trouvé', 404);
@@ -35,10 +36,10 @@ class PropertyController extends BaseController
     {
         try {
             $client = Client::with('client')
-                                ->with('propertyType')
-                                ->with('propertiesHeaterTypes')
-                                ->with('propertiesShutterTypes')
-                                ->findOrFail($clientId);
+                ->with('propertyType')
+                ->with('propertiesHeaterTypes')
+                ->with('propertiesShutterTypes')
+                ->findOrFail($clientId);
             $properties = Property::where('id_clients', $client->id)->get();
             return response()->json($properties);
         } catch (\Exception $e) {
@@ -82,127 +83,128 @@ class PropertyController extends BaseController
         return response()->json($properties);
     }
 
-    public function getByClientWish($clientWishId){
+    public function getByClientWish($clientWishId)
+    {
         try {
             $clientWish = ClientWish::findOrFail($clientWishId);
-            $priceMin = $clientWish->price * 7 /10;
-            $priceMax = $clientWish->price * 115/100;
+            $priceMin = $clientWish->price * 7 / 10;
+            $priceMax = $clientWish->price * 115 / 100;
             $whereArray = [
                 ['price', '>=', $priceMin],
                 ['price', '<=', $priceMax],
             ];
-            if($clientWish->livingArea != null){
-                array_push($whereArray, ['livingArea', '>=', $clientWish->livingArea * 75/100]);
+            if ($clientWish->livingArea != null) {
+                array_push($whereArray, ['livingArea', '>=', $clientWish->livingArea * 75 / 100]);
             }
-            if($clientWish->area != null){
-                array_push($whereArray, ['area', '>=', $clientWish->area * 1/2]);
+            if ($clientWish->area != null) {
+                array_push($whereArray, ['area', '>=', $clientWish->area * 1 / 2]);
             }
-            if($clientWish->gardenArea != null){
-                array_push($whereArray, ['gardenArea', '>=', $clientWish->gardenArea * 1/2]);
+            if ($clientWish->gardenArea != null) {
+                array_push($whereArray, ['gardenArea', '>=', $clientWish->gardenArea * 1 / 2]);
             }
             /**
              * TODO :: voir avec l'équipe comment gérer le floorNumber, piecesNumber,
              */
-            if($clientWish->bedroomNumber != null){
-                if($clientWish->bedroomNumber < 3){
+            if ($clientWish->bedroomNumber != null) {
+                if ($clientWish->bedroomNumber < 3) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber]);
-                }else if($clientWish->bedroomNumber < 6){
+                } else if ($clientWish->bedroomNumber < 6) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 1]);
-                }else if($clientWish->bedroomNumber < 9){
+                } else if ($clientWish->bedroomNumber < 9) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 2]);
-                }else if($clientWish->bedroomNumber < 11){
+                } else if ($clientWish->bedroomNumber < 11) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 3]);
-                }else if($clientWish->bedroomNumber < 16){
+                } else if ($clientWish->bedroomNumber < 16) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 4]);
-                }else if($clientWish->bedroomNumber < 21){
+                } else if ($clientWish->bedroomNumber < 21) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 5]);
-                }else if($clientWish->bedroomNumber < 50){
+                } else if ($clientWish->bedroomNumber < 50) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 10]);
-                }else if($clientWish->bedroomNumber < 100){
+                } else if ($clientWish->bedroomNumber < 100) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 20]);
-                }else if($clientWish->bedroomNumber < 500){
+                } else if ($clientWish->bedroomNumber < 500) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 100]);
-                }else if($clientWish->bedroomNumber < 1000){
+                } else if ($clientWish->bedroomNumber < 1000) {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 200]);
-                }else {
+                } else {
                     array_push($whereArray, ['bedroomNumber', '>=', $clientWish->bedroomNumber - 500]);
                 }
             }
 
-            if($clientWish->bathroomNumber != null){
-                if($clientWish->bathroomNumber < 3){
+            if ($clientWish->bathroomNumber != null) {
+                if ($clientWish->bathroomNumber < 3) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber]);
-                }else if($clientWish->bathroomNumber < 5){
+                } else if ($clientWish->bathroomNumber < 5) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 1]);
-                }else if($clientWish->bathroomNumber < 7){
+                } else if ($clientWish->bathroomNumber < 7) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 2]);
-                }else if($clientWish->bathroomNumber < 10){
+                } else if ($clientWish->bathroomNumber < 10) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 3]);
-                }else if($clientWish->bathroomNumber < 16){
+                } else if ($clientWish->bathroomNumber < 16) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 4]);
-                }else if($clientWish->bathroomNumber < 21){
+                } else if ($clientWish->bathroomNumber < 21) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 5]);
-                }else if($clientWish->bathroomNumber < 50){
+                } else if ($clientWish->bathroomNumber < 50) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 10]);
-                }else if($clientWish->bathroomNumber < 100){
+                } else if ($clientWish->bathroomNumber < 100) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 20]);
-                }else if($clientWish->bathroomNumber < 500){
+                } else if ($clientWish->bathroomNumber < 500) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 100]);
-                }else if($clientWish->bathroomNumber < 1000){
+                } else if ($clientWish->bathroomNumber < 1000) {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 200]);
-                }else {
+                } else {
                     array_push($whereArray, ['bathroomNumber', '>=', $clientWish->bathroomNumber - 500]);
                 }
             }
 
-            if($clientWish->wcNumber != null){
-                if($clientWish->wcNumber < 3){
+            if ($clientWish->wcNumber != null) {
+                if ($clientWish->wcNumber < 3) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber]);
-                }else if($clientWish->wcNumber < 5){
+                } else if ($clientWish->wcNumber < 5) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 1]);
-                }else if($clientWish->wcNumber < 7){
+                } else if ($clientWish->wcNumber < 7) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 2]);
-                }else if($clientWish->wcNumber < 10){
+                } else if ($clientWish->wcNumber < 10) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 3]);
-                }else if($clientWish->wcNumber < 16){
+                } else if ($clientWish->wcNumber < 16) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 4]);
-                }else if($clientWish->wcNumber < 21){
+                } else if ($clientWish->wcNumber < 21) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 5]);
-                }else if($clientWish->wcNumber < 50){
+                } else if ($clientWish->wcNumber < 50) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 10]);
-                }else if($clientWish->wcNumber < 100){
+                } else if ($clientWish->wcNumber < 100) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 20]);
-                }else if($clientWish->wcNumber < 500){
+                } else if ($clientWish->wcNumber < 500) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 100]);
-                }else if($clientWish->wcNumber < 1000){
+                } else if ($clientWish->wcNumber < 1000) {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 200]);
-                }else {
+                } else {
                     array_push($whereArray, ['wcNumber', '>=', $clientWish->wcNumber - 500]);
                 }
             }
 
-            if($clientWish->garden){
+            if ($clientWish->garden) {
                 array_push($whereArray, ['garden', '=', true]);
             }
-            if($clientWish->garage){
+            if ($clientWish->garage) {
                 array_push($whereArray, ['garage', '=', true]);
             }
-            if($clientWish->cellar){
+            if ($clientWish->cellar) {
                 array_push($whereArray, ['cellar', '=', true]);
             }
-            if($clientWish->atic){
+            if ($clientWish->atic) {
                 array_push($whereArray, ['atic', '=', true]);
             }
-            if($clientWish->parking){
+            if ($clientWish->parking) {
                 array_push($whereArray, ['parking', '=', true]);
             }
-            if($clientWish->opticalFiber){
+            if ($clientWish->opticalFiber) {
                 array_push($whereArray, ['opticalFiber', '=', true]);
             }
-            if($clientWish->swimmingPool){
+            if ($clientWish->swimmingPool) {
                 array_push($whereArray, ['swimmingPool', '=', true]);
             }
-            if($clientWish->balcony){
+            if ($clientWish->balcony) {
                 array_push($whereArray, ['balcony', '=', true]);
             }
 
@@ -210,24 +212,23 @@ class PropertyController extends BaseController
             $clientWishHeaterTypes = ClientWishHeaterType::where('client_wish_id', $clientWish->id);
             $clientWishShutterTypes = ClientWishShutterType::where('client_wish_id', $clientWish->id);
 
-            if(count($clientWishPropertyTypes) > 0){
+            if (count($clientWishPropertyTypes) > 0) {
                 $clientWishOrWherePropertyTypesArray = [];
-                foreach($clientWishPropertyTypes as $clientWichPropertyType){
+                foreach ($clientWishPropertyTypes as $clientWichPropertyType) {
                     array_push($clientWishOrWherePropertyTypesArray, ['property_type_id', '=', $clientWichPropertyType]);
                 }
                 $clientWishOrWherePropertyTypesArrayFirstIndex = array_shift($clientWishOrWherePropertyTypesArray);
                 $properties = Property::where($whereArray)
-                                        ->where($clientWishOrWherePropertyTypesArrayFirstIndex)
-                                        ->orWhere($clientWishOrWherePropertyTypesArray)
-                                        ->get();
+                    ->where($clientWishOrWherePropertyTypesArrayFirstIndex)
+                    ->orWhere($clientWishOrWherePropertyTypesArray)
+                    ->get();
             }
 
-            
+
 
             $properties = Property::where($whereArray)->get();
 
             return response()->json($properties, 200);
-
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
@@ -282,11 +283,11 @@ class PropertyController extends BaseController
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
-    
+
             DB::beginTransaction();
-    
+
             $property = new Property();
-    
+
             $property->price = $request->price;
             $property->label = $request->label;
             $property->description = $request->description;
@@ -305,7 +306,7 @@ class PropertyController extends BaseController
             $property->wcNumber = $request->wcNumber;
             $property->buildingNumber = $request->buildingNumber;
             $property->bearing = $request->bearing;
-            $property->doorNumber = $request->doorNumber; 
+            $property->doorNumber = $request->doorNumber;
             $property->garden = $request->garden;
             $property->garage = $request->garage;
             $property->cellar = $request->cellar;
@@ -316,22 +317,27 @@ class PropertyController extends BaseController
             $property->balcony = $request->balcony;
             $property->client_id = $request->client_id;
             $property->property_type_id = $request->property_type_id;
-    
+
             $isPropertySaved = $property->save();
-    
-            if(!$isPropertySaved){
+
+            if (!$isPropertySaved) {
                 DB::rollBack();
             }
 
             $propertyId = $property->id;
-    
+
+            if ($request->hasFile('photos')) {
+                $this->addFile($propertyId, $request);
+            }
+
+
             if ($request->has('heater_type_id')) {
                 foreach ($request->heater_type_id as $heaterTypeId) {
                     $propertyHeaterTypes = new PropertyHeaterType();
                     $propertyHeaterTypes->client_wish_id = $propertyId;
                     $propertyHeaterTypes->heater_type_id = $heaterTypeId;
                     $isSaved = $propertyHeaterTypes->save();
-                    if(!$isSaved){
+                    if (!$isSaved) {
                         DB::rollBack();
                     }
                 }
@@ -342,7 +348,7 @@ class PropertyController extends BaseController
                     $propertyShutterTypes->client_wish_id = $propertyId;
                     $propertyShutterTypes->shutter_type_id = $shutterTypeId;
                     $isSaved = $propertyShutterTypes->save();
-                    if(!$isSaved){
+                    if (!$isSaved) {
                         DB::rollBack();
                     }
                 }
@@ -353,7 +359,6 @@ class PropertyController extends BaseController
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
-        
     }
 
     public function update($id, Request $request)
@@ -406,9 +411,9 @@ class PropertyController extends BaseController
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
-    
+
             DB::beginTransaction();
-    
+
             $property->price = $request->price;
             $property->label = $request->label;
             $property->description = $request->description;
@@ -427,7 +432,7 @@ class PropertyController extends BaseController
             $property->wcNumber = $request->wcNumber;
             $property->buildingNumber = $request->buildingNumber;
             $property->bearing = $request->bearing;
-            $property->doorNumber = $request->doorNumber; 
+            $property->doorNumber = $request->doorNumber;
             $property->garden = $request->garden;
             $property->garage = $request->garage;
             $property->cellar = $request->cellar;
@@ -438,15 +443,19 @@ class PropertyController extends BaseController
             $property->balcony = $request->balcony;
             $property->client_id = $request->client_id;
             $property->property_type_id = $request->property_type_id;
-    
+
             $isPropertySaved = $property->save();
-    
-            if(!$isPropertySaved){
+
+            if (!$isPropertySaved) {
                 DB::rollBack();
             }
 
             $propertyId = $property->id;
-    
+
+            if ($request->hasFile('photos')) {
+                $this->addFile($propertyId, $request);
+            }
+
             $propertyHeaterTypesArray = PropertyHeaterType::where('property_id', $propertyId)->get();
 
             if (count($propertyHeaterTypesArray) > 0) {
@@ -459,7 +468,7 @@ class PropertyController extends BaseController
                     }
                     if ($doIDel) {
                         $isDel = $oldData->delete();
-                        if(!$isDel){
+                        if (!$isDel) {
                             DB::rollBack();
                         }
                     }
@@ -479,7 +488,7 @@ class PropertyController extends BaseController
                         $propertyHeaterTypes->client_wish_id = $propertyId;
                         $propertyHeaterTypes->heater_type_id = $heaterTypeId;
                         $isAdd = $propertyHeaterTypes->save();
-                        if(!$isAdd){
+                        if (!$isAdd) {
                             DB::rollBack();
                         }
                     }
@@ -498,7 +507,7 @@ class PropertyController extends BaseController
                     }
                     if ($doIDel) {
                         $isDel = $oldData->delete();
-                        if(!$isDel){
+                        if (!$isDel) {
                             DB::rollBack();
                         }
                     }
@@ -518,7 +527,7 @@ class PropertyController extends BaseController
                         $propertyShutterTypes->client_wish_id = $propertyId;
                         $propertyShutterTypes->shutter_type_id = $shutterTypeId;
                         $isAdd = $propertyShutterTypes->save();
-                        if(!$isAdd){
+                        if (!$isAdd) {
                             DB::rollBack();
                         }
                     }
@@ -544,6 +553,28 @@ class PropertyController extends BaseController
             }
         } catch (\Exception $e) {
             return response()->json('Property non trouvé', 404);
+        }
+    }
+
+    public function addFile($id, Request $request)
+    {
+        try {
+            if ($request->hasFile('photos') && $request->file('photos')->isValid()) {
+                $s3 = App::make('aws')->createClient('s3');
+                $files = $request->file('photos');
+                for ($i = 0; $i < count($files); $i++) {
+                    $filename = time() . $files[$i]->getClientOriginalName();
+                    $destination = './uploads/properties/' . $id;
+                    $files[$i]->move($destination, $filename);
+                    $s3->putObject(array(
+                        'Bucket'     => 'immoco-bucket',
+                        'Key'        => $destination . $filename,
+                        'SourceFile' => $destination . $filename,
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 }
