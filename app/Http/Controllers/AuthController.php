@@ -26,7 +26,7 @@ class AuthController extends Controller
         $credentials = $request->only(['mail', 'password']);
         if (!$token = Auth::setTTL(30)->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
-        }
+        } 
 
         return $this->respondWithToken($token, 200);
     }
