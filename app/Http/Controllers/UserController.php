@@ -16,15 +16,7 @@ class UserController extends Controller
             'firstname' => 'required|max:50',
             'lastname' => 'required|max:50',
             'mail' => 'required|email|unique:users|max:255',
-            'username' => 'required|unique:users|max:50',
-            'cellphone' => [
-                'size:10',
-                Rule::requiredIf($request->input('phone') === null)
-            ],
-            'phone' => [
-                'size:10',
-                Rule::requiredIf($request->input('cellphone') === null)
-            ],
+            'username' => 'required|max:50',
             'password' => 'required',
             'user_type_id' => 'required|integer'
         ],
@@ -32,10 +24,7 @@ class UserController extends Controller
             'required' => 'Vous devez remplir ce champ',
             'max' => 'Les données entrées sont trop longue, veuillez raccourcir',
             'email' => 'Veuillez remplir un mail valide',
-            'mail.unique' => 'Cette adresse mail est déjà utilisée',
-            'username.unique' => 'Ce nom d\'utilisateur est déjà utilisé',
-            'cellphone.size' => 'Veuillez entrer un numéro de téléphone valide',
-            'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
+            'mail.unique' => 'Cette adresse mail est déjà utilisée'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -49,6 +38,7 @@ class UserController extends Controller
         $user->cellphone = $request->cellphone;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
+        $user->sexe = $request->sexe;
         $user->user_type_id = $request->user_type_id;
 
         $isSaved = $user->save();
@@ -84,26 +74,14 @@ class UserController extends Controller
                 'firstname' => 'required|max:50',
                 'lastname' => 'required|max:50',
                 'mail' => 'required|email|unique:users|max:255',
-                'username' => 'required|unique:users|max:50',
-                'cellphone' => [
-                    'size:10',
-                    Rule::requiredIf($request->input('phone') === null)
-                ],
-                'phone' => [
-                    'size:10',
-                    Rule::requiredIf($request->input('cellphone') === null)
-                ],
-                'password' => 'required',
+                'username' => 'required|max:50',
                 'user_type_id' => 'required|integer'
             ],
             [
                 'required' => 'Vous devez remplir ce champ',
                 'max' => 'Les données entrées sont trop longue, veuillez raccourcir',
                 'email' => 'Veuillez remplir un mail valide',
-                'mail.unique' => 'Cette adresse mail est déjà utilisée',
-                'username.unique' => 'Ce nom d\'utilisateur est déjà utilisé',
-                'cellphone.size' => 'Veuillez entrer un numéro de téléphone valide',
-                'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
+                'mail.unique' => 'Cette adresse mail est déjà utilisée'
             ]);
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
@@ -112,10 +90,19 @@ class UserController extends Controller
             $user->lastname = $request->lastname;
             $user->mail = $request->mail;
             $user->username = $request->username;
-            $user->cellphone = $request->cellphone;
-            $user->phone = $request->phone;
-            $user->password = Hash::make($request->password);
-            $user->user_type_id = $request->user_type_id;
+            if($request->cellphone){
+                $user->cellphone = $request->cellphone;
+            }
+            if($request->phone){
+                $user->phone = $request->phone;
+            }
+            if($request->sexe) {
+                $user->sexe = $request->sexe;
+            }
+            if($request->user_type_id){
+                $user->user_type_id = $request->user_type_id;
+            }
+            
 
             $isSaved = $user->save();
 

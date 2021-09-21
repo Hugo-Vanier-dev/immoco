@@ -43,6 +43,6 @@ class CreatePropertiesShutterTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties_property_types_');
+        Schema::dropIfExists('properties_shutter_types');
     }
 }

@@ -25,6 +25,8 @@ class AddSexeToClient extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropColumn('sexe');
+        });
     }
 }
