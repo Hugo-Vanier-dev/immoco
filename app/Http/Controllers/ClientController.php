@@ -168,12 +168,6 @@ class ClientController extends Controller
                     'firstname' => 'required|max:50',
                     'lastname' => 'required|max:50',
                     'mail' => 'required|email|unique:users|max:255',
-                    'cellphone' => [
-                        Rule::requiredIf($request->input('phone') === null)
-                    ],
-                    'phone' => [
-                        Rule::requiredIf($request->input('cellphone') === null)
-                    ],
                     'client_type_id' => 'required|integer',
                     'user_id' => 'required|integer'
                 ],
@@ -181,9 +175,7 @@ class ClientController extends Controller
                     'required' => 'Vous devez remplir ce champ',
                     'max' => 'Les données entrées sont trop longue, veuillez raccourcir',
                     'email' => 'Veuillez remplir un mail valide',
-                    'mail.unique' => 'Cette adresse mail est déjà utilisée',
-                    'cellphone.size' => 'Veuillez entrer un numéro de téléphone valide',
-                    'phone.size' => 'Veuillez entrer un numéro de téléphone valide'
+                    'mail.unique' => 'Cette adresse mail est déjà utilisée'
                 ]
             );
             if ($validator->fails()) {
@@ -193,7 +185,6 @@ class ClientController extends Controller
             $client->firstname = $request->firstname;
             $client->lastname = $request->lastname;
             $client->mail = $request->mail;
-            $client->username = $request->username;
             $client->cellphone = $request->cellphone;
             $client->phone = $request->phone;
             $client->streetNumber = $request->streetNumber;
@@ -204,6 +195,7 @@ class ClientController extends Controller
             $client->description = $client->description;
             $client->client_type_id = $request->client_type_id;
             $client->user_id = $request->user_id;
+            $client->sexe = $request->sexe;
 
 
             $isSaved = $client->save();
