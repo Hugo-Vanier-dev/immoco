@@ -16,7 +16,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        return response()->json(['message' => 'unnacepted refresh token'], 500);
           //validate incoming request 
         $this->validate($request, [
             'mail' => 'required|string',
