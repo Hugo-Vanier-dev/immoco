@@ -12,7 +12,7 @@ class Client extends Model
 
     protected $attributes = [
         'mail' => null,
-        'cellephone' => null,
+        'cellphone' => null,
         'phone' => null,
         'archive' => false,
         'streetNumber' => null,
@@ -20,7 +20,8 @@ class Client extends Model
         'zipCode' => null,
         'city' => null,
         'streetName' => null,
-        'description' => null
+        'description' => null,
+        'sexe' => 1
     ];
 
     protected $fillable = [
