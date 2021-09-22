@@ -214,7 +214,7 @@ class ClientController extends Controller
                 return response()->json(['message' => 'Il y a eu un problème lors de la modification du client.'], 500);
             }
         } catch (\Exception $e) {
-            return response()->json('Client non trouvé', 404);
+            return response()->json($e->getMessage(), $e->getCode());
         }
     }
 

@@ -16,6 +16,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        return response()->json(['message' => 'unnacepted refresh token'], 500);
           //validate incoming request 
         $this->validate($request, [
             'mail' => 'required|string',
@@ -28,7 +29,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         } 
 
-        return $this->respondWithToken($token, 200);
+        //return $this->respondWithToken($token, 200);
     }
 
         /**

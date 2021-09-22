@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -31,5 +32,7 @@ class ClientSeeder extends Seeder
             'user_id' => 1,
             'sexe' => 1
         ]);
+
+        Client::factory()->count(50)->create();
     }
 }
