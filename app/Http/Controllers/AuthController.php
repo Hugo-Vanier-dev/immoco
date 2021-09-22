@@ -52,6 +52,8 @@ class AuthController extends Controller
     {
         auth()->logout();
 
+        auth()->invalidate(true);
+
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
