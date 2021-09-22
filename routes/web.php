@@ -16,7 +16,7 @@ use App\Http\Controllers\ClientController;
 */
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function() use ($router){
-        $router->get('refresh', 'AuthController@refresh');
+        $router->post('refresh', 'AuthController@refresh');
         $router->get('logout', 'AuthController@logout');
         $router->get('me', 'AuthController@me');
         $router->post('login', 'AuthController@login');
