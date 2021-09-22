@@ -28,7 +28,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         } 
 
-        //return $this->respondWithToken($token, 200);
+        return $this->respondWithToken($token, 200);
     }
 
         /**
