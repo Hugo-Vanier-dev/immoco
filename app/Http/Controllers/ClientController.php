@@ -140,6 +140,7 @@ class ClientController extends Controller
         $client->user_id = $request->user_id;
         $client->sexe = 1;
 
+        
 
         $isSaved = $client->save();
 
