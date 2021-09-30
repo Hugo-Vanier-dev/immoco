@@ -15,7 +15,7 @@ use App\Http\Controllers\ClientController;
 |
 */
 
-//$router->post('api/auth/login', 'AuthController@login');
+$router->post('api/auth/login', 'AuthController@login');
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function() use ($router){
