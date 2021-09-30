@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
 
           /**
      * Get a JWT via given credentials.
@@ -24,7 +31,7 @@ class AuthController extends Controller
 
 
         $credentials = $request->only(['mail', 'password']);
-        if (!$token = Auth::setTTL(60)->attempt($credentials)) {
+        if (!$token = Auth::setTTL(2)->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         } 
 
