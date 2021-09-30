@@ -14,12 +14,14 @@ use App\Http\Controllers\ClientController;
 | and give it the Closure to call when that URI is requested.
 |
 */
+
+$router->post('api/auth/login', 'AuthController@login');
+
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function() use ($router){
         $router->post('refresh', 'AuthController@refresh');
         $router->get('logout', 'AuthController@logout');
         $router->get('me', 'AuthController@me');
-        $router->post('login', 'AuthController@login');
     });
     $router->group(['prefix' => 'users'], function() use ($router){
         $router->get('', 'UserController@gets');
