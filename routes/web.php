@@ -14,7 +14,7 @@ use App\Http\Controllers\ClientController;
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function() use ($router){
         $router->post('refresh', 'AuthController@refresh');
         $router->get('logout', 'AuthController@logout');
