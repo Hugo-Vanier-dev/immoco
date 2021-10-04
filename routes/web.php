@@ -2,8 +2,6 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-use App\Http\Controllers\ClientController;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
